@@ -16,6 +16,9 @@ void PrintString(const FString& message)
 UMultiplayerSessionsSubsystem::UMultiplayerSessionsSubsystem()
 {
 	//PrintString("MSS Constructor");
+
+	CreateServerAfterDestroy = false;
+	DestroyServerName = "";
 }
 
 void UMultiplayerSessionsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -32,6 +35,7 @@ void UMultiplayerSessionsSubsystem::Initialize(FSubsystemCollectionBase& Collect
 		if (SessionInterface.IsValid())
 		{
 			SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMultiplayerSessionsSubsystem::OnCreateSessionComplete);
+			SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UMultiplayerSessionsSubsystem::OnDestroySessionComplete);
 		}
 	}
 }
@@ -53,6 +57,17 @@ void UMultiplayerSessionsSubsystem::CreateServer(FString ServerName)
 
 	FName MySessionName = FName("Multiplayer Game Session Name");
 	
+	FNamedOnlineSession* ExistingSession = SessionInterface->GetNamedSession(MySessionName);
+
+	if (ExistingSession)
+	{
+		PrintString("Session already exists, destroying it.");
+		CreateServerAfterDestroy = true;
+		DestroyServerName = ServerName;
+		SessionInterface->DestroySession(MySessionName);
+		return;
+	}
+
 	FOnlineSessionSettings SessionSettings;
 
 	SessionSettings.bAllowJoinInProgress = true;
@@ -84,5 +99,15 @@ void UMultiplayerSessionsSubsystem::OnCreateSessionComplete(FName SessionName, b
 	if (bWasSuccessful)
 	{
 		GetWorld()->ServerTravel("/Game/ThirdPerson/Lvl_ThirdPerson?listen");
+	}
+}
+
+void UMultiplayerSessionsSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
+{
+	PrintString(FString::Printf(TEXT("OnDestroySessionComplete, SessionName: %s, Success: %d"), *SessionName.ToString(), bWasSuccessful));
+	if (CreateServerAfterDestroy)
+	{
+		CreateServerAfterDestroy = false;
+		CreateServer(DestroyServerName);
 	}
 }
