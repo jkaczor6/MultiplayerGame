@@ -53,14 +53,6 @@ void UMultiplayerSessionsSubsystem::CreateServer(FString ServerName)
 
 	FName MySessionName = FName("Multiplayer Game Session Name");
 	
-	FNamedOnlineSession* ExistingSession = SessionInterface->GetNamedSession(MySessionName);
-	if (ExistingSession)
-	{
-		PrintString("Session already exists, destroying it.");
-		SessionInterface->DestroySession(MySessionName);
-		return;
-	}
-
 	FOnlineSessionSettings SessionSettings;
 
 	SessionSettings.bAllowJoinInProgress = true;
