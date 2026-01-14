@@ -50,4 +50,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FServerJoinDelegate ServerJoinDel;
+
+	UPROPERTY(BlueprintReadWrite)
+	FString MapPath;
 };

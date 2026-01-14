@@ -125,7 +125,7 @@ void UMultiplayerSessionsSubsystem::OnCreateSessionComplete(FName SessionName, b
 
 	if (bWasSuccessful)
 	{
-		GetWorld()->ServerTravel("/Game/ThirdPerson/Lvl_ThirdPerson?listen");
+		GetWorld()->ServerTravel(MapPath);
 	}
 }
 
