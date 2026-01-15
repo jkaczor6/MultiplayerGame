@@ -27,6 +27,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool AllTriggerActorsTriggered;
 	bool ArePointsSet;
+	UPROPERTY(EditAnywhere)
+	bool OwnerIsTriggerActor;
 
 	UPROPERTY(EditAnywhere)
 	float MoveTime;

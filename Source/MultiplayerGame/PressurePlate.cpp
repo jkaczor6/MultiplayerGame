@@ -40,6 +40,10 @@ APressurePlate::APressurePlate()
 		Mesh->SetRelativeScale3D(FVector(4.0f, 4.0f, 0.5f));
 		Mesh->SetRelativeLocation(FVector(0.0f, 0.0f, 7.2f));
 	}
+	
+	Transporter = CreateDefaultSubobject<UTransporter>(TEXT("Transporter"));
+	Transporter->MoveTime = 0.25f;
+	Transporter->OwnerIsTriggerActor = true;
 }
 
 // Called when the game starts or when spawned
@@ -49,6 +53,9 @@ void APressurePlate::BeginPlay()
 	
 	TriggerShape->SetVisibility(false);
 	TriggerShape->SetCollisionProfileName(FName("OverlapAll"));
+
+	FVector Point2 = GetActorLocation() + FVector(0.0f, 0.0f, -10.0f);
+	Transporter->SetPoints(GetActorLocation(), Point2);
 }
 
 // Called every frame

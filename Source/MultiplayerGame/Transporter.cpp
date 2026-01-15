@@ -20,6 +20,11 @@ void UTransporter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (OwnerIsTriggerActor)
+	{
+		TriggerActors.Add(GetOwner());
+	}
+
 	for (AActor* TA : TriggerActors)
 	{
 		APressurePlate* PressurePlate = Cast<APressurePlate>(TA);
