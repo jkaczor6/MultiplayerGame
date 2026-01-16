@@ -77,12 +77,12 @@ void UTransporter::SetPoints(FVector Point1, FVector Point2)
 void UTransporter::OnPressurePlateActivated()
 {
 	ActivatedTriggerCount++;
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, FString::Printf(TEXT("Activated: %d"), ActivatedTriggerCount));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, FString::Printf(TEXT("Activated: %d"), ActivatedTriggerCount));
 }
 
 void UTransporter::OnPressurePlateDeactivated()
 {
 	ActivatedTriggerCount--;
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, FString::Printf(TEXT("Deactivated: %d"), ActivatedTriggerCount));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, FString::Printf(TEXT("Deactivated: %d"), ActivatedTriggerCount));
 }
 
