@@ -8,6 +8,8 @@
 #include "CollectableKeyHolder.h"
 #include "CollectableKey.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCollectableKeyOnCollected);
+
 UCLASS()
 class MULTIPLAYERGAME_API ACollectableKey : public AActor
 {
@@ -47,4 +49,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	ACollectableKeyHolder* KeyHolderRef;
+
+	FCollectableKeyOnCollected OnCollected;
 };
